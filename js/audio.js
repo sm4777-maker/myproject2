@@ -372,21 +372,83 @@ if (typeof window !== 'undefined') {
 
 // 페이지 로드 시 오디오 시스템 준비
 document.addEventListener('DOMContentLoaded', () => {
-    // 첫 번째 사용자 상호작용에서 오디오 초기화
-    const initAudioOnFirstClick = async () => {
-        if (!ocarinaAudio.isInitialized) {
-            await ocarinaAudio.initialize();
-            // 한 번만 실행되도록 이벤트 리스너 제거
-            document.removeEventListener('click', initAudioOnFirstClick);
-            document.removeEventListener('touchstart', initAudioOnFirstClick);
-            document.removeEventListener('keydown', initAudioOnFirstClick);
+    // 오디오 초기화 버튼 생성
+    const createAudioInitButton = () => {
+        const button = document.createElement('button');
+        button.id = 'audio-init-btn';
+        button.className = 'btn btn-primary';
+        button.innerHTML = '🎵 음악 시작하기 (클릭 필수)';
+        button.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10000;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #6f42c1, #007bff);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+        `;
+
+        // 펄스 애니메이션 CSS 추가
+        if (!document.querySelector('#pulse-style')) {
+            const style = document.createElement('style');
+            style.id = 'pulse-style';
+            style.textContent = `
+                @keyframes pulse {
+                    0% { transform: translate(-50%, -50%) scale(1); }
+                    50% { transform: translate(-50%, -50%) scale(1.05); }
+                    100% { transform: translate(-50%, -50%) scale(1); }
+                }
+            `;
+            document.head.appendChild(style);
         }
+
+        button.addEventListener('click', async () => {
+            try {
+                await ocarinaAudio.initialize();
+                button.remove();
+
+                // 테스트 음 재생
+                setTimeout(() => {
+                    ocarinaAudio.playNote(440, 0.5, 0.3); // A4 음표 재생
+                }, 200);
+
+                console.log('🎵 오디오 시스템 활성화 완료!');
+
+                // 성공 알림
+                const successMsg = document.createElement('div');
+                successMsg.textContent = '🎵 음악이 활성화되었습니다!';
+                successMsg.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #28a745;
+                    color: white;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    z-index: 9999;
+                `;
+                document.body.appendChild(successMsg);
+                setTimeout(() => successMsg.remove(), 3000);
+
+            } catch (error) {
+                console.error('오디오 초기화 실패:', error);
+                button.textContent = '❌ 오디오 오류 - 새로고침 후 다시 시도';
+                button.style.background = '#dc3545';
+            }
+        });
+
+        document.body.appendChild(button);
     };
 
-    // 다양한 사용자 상호작용에 대응
-    document.addEventListener('click', initAudioOnFirstClick);
-    document.addEventListener('touchstart', initAudioOnFirstClick);
-    document.addEventListener('keydown', initAudioOnFirstClick);
+    // 3초 후 초기화 버튼 표시
+    setTimeout(createAudioInitButton, 1000);
 });
 
 // 페이지 언로드 시 정리

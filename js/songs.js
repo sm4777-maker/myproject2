@@ -433,14 +433,25 @@ class SongManager {
         const noteData = this.currentSong.notes[this.currentNoteIndex];
         const frequency = NOTE_FREQUENCIES[noteData.note];
 
-        if (frequency && ocarinaAudio) {
+        if (frequency) {
             // 운지법 표시 업데이트
             if (window.fingeringSystem) {
                 window.fingeringSystem.selectNote(noteData.fingering);
             }
 
-            // 음표 재생
-            await ocarinaAudio.playNote(frequency, noteData.duration * 0.8);
+            // 음표 재생 - 향상된 오디오 우선 사용
+            try {
+                if (window.enhancedOcarinaAudio && window.enhancedOcarinaAudio.isInitialized) {
+                    await window.enhancedOcarinaAudio.playEnhancedNote(frequency, noteData.duration * 0.8, 0.6);
+                } else if (ocarinaAudio) {
+                    await ocarinaAudio.playNote(frequency, noteData.duration * 0.8, 0.6);
+                }
+            } catch (error) {
+                console.warn('음표 재생 실패:', error);
+                if (ocarinaAudio) {
+                    await ocarinaAudio.playNote(frequency, noteData.duration * 0.8, 0.6);
+                }
+            }
 
             // 다음 음표로 진행
             this.currentNoteIndex++;
@@ -549,16 +560,34 @@ class SongManager {
                             </div>
                         </div>
                         <div class="notes-sequence">
-                            <h4>음표 순서:</h4>
-                            ${song.notes.map((noteData, index) => `
-                                <div class="note-item" data-note-index="${index}">
-                                    <div class="note-name">${noteData.note}</div>
-                                    <div class="note-duration">${this.formatDuration(noteData.duration)}</div>
-                                    <div class="fingering-hint" onclick="window.fingeringSystem.selectNote('${noteData.fingering}')">
-                                        운지보기
+                            <h4>🎼 음표 순서 및 운지법:</h4>
+                            <div class="sequence-controls">
+                                <button class="btn btn-sm btn-primary play-sequence-btn">
+                                    <i class="icon">▶</i> 순서대로 재생
+                                </button>
+                                <button class="btn btn-sm btn-secondary" onclick="window.fingeringSystem && window.fingeringSystem.showAllFingeringPositions()">
+                                    <i class="icon">👆</i> 모든 운지법 보기
+                                </button>
+                            </div>
+                            <div class="notes-grid">
+                                ${song.notes.map((noteData, index) => `
+                                    <div class="note-item enhanced" data-note-index="${index}" data-note="${noteData.note}">
+                                        <div class="note-header">
+                                            <span class="note-number">${index + 1}</span>
+                                            <span class="note-name">${noteData.note}</span>
+                                        </div>
+                                        <div class="note-symbol">${this.formatDuration(noteData.duration)}</div>
+                                        <div class="note-actions">
+                                            <button class="fingering-btn" onclick="window.fingeringSystem && window.fingeringSystem.selectNote('${noteData.fingering}'); this.classList.add('active')">
+                                                <i class="icon">👆</i> 운지
+                                            </button>
+                                            <button class="play-single-btn" onclick="window.songManager.playSingleNote('${noteData.note}', ${noteData.duration})">
+                                                <i class="icon">🔊</i> 재생
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            `).join('')}
+                                `).join('')}
+                            </div>
                         </div>
                     </div>
                     <div class="modal-actions">
@@ -649,15 +678,20 @@ class SongManager {
         const noteData = this.currentSong.notes[this.currentNoteIndex];
         const frequency = NOTE_FREQUENCIES[noteData.note];
 
-        if (frequency && ocarinaAudio) {
-            // 메인 멜로디
-            const mainPromise = ocarinaAudio.playNote(frequency, noteData.duration * 0.8, 0.7);
-
-            // 하모니 추가 (3도 또는 5도)
-            const harmonyFreq = this.getHarmonyFrequency(frequency);
-            if (harmonyFreq) {
-                const harmonyPromise = ocarinaAudio.playNote(harmonyFreq, noteData.duration * 0.8, 0.3);
+        if (frequency && window.enhancedOcarinaAudio) {
+            // 향상된 오디오로 재생
+            try {
+                window.enhancedOcarinaAudio.playEnhancedNote(frequency, noteData.duration * 0.8, 0.7);
+            } catch (error) {
+                console.warn('향상된 오디오 실패, 기본 오디오 사용:', error);
+                if (ocarinaAudio) {
+                    ocarinaAudio.playNote(frequency, noteData.duration * 0.8, 0.7);
+                }
             }
+        } else if (frequency && ocarinaAudio) {
+            // 기본 오디오로 대체
+            ocarinaAudio.playNote(frequency, noteData.duration * 0.8, 0.7);
+        }
 
             // 운지법 표시 업데이트
             if (window.fingeringSystem) {
@@ -782,6 +816,58 @@ class SongManager {
      */
     getSongsByLevel(level) {
         return this.songs.filter(song => song.level === level);
+    }
+
+    /**
+     * 개별 음표 재생
+     */
+    async playSingleNote(noteName, duration = 1) {
+        const frequency = NOTE_FREQUENCIES[noteName];
+        if (!frequency) return;
+
+        try {
+            if (window.enhancedOcarinaAudio && window.enhancedOcarinaAudio.isInitialized) {
+                await window.enhancedOcarinaAudio.playEnhancedNote(frequency, duration, 0.7);
+            } else if (window.ocarinaAudio) {
+                if (!window.ocarinaAudio.isInitialized) {
+                    await window.ocarinaAudio.initialize();
+                }
+                await window.ocarinaAudio.playNote(frequency, duration, 0.7);
+            }
+
+            // 운지법도 표시
+            if (window.fingeringSystem) {
+                window.fingeringSystem.selectNote(noteName);
+            }
+
+        } catch (error) {
+            console.error('개별 음표 재생 실패:', error);
+
+            // 오디오 활성화 필요 알림
+            const alert = document.createElement('div');
+            alert.className = 'audio-alert';
+            alert.innerHTML = `
+                <div class="alert-content">
+                    <span>🎵 음악을 재생하려면 먼저 "음악 시작하기" 버튼을 클릭해주세요!</span>
+                    <button onclick="this.parentElement.parentElement.remove()">×</button>
+                </div>
+            `;
+            alert.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #ff6b6b;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 8px;
+                z-index: 9999;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            `;
+
+            document.body.appendChild(alert);
+            setTimeout(() => alert.remove(), 4000);
+        }
     }
 }
 
