@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오카리나 학습 플랫폼 🎵</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Gaegu:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 헤더 섹션 -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">🎵 오카리나 마스터</h1>
+                <div class="theme-toggle">
+                    <button id="themeToggle" class="theme-btn">🌙</button>
+                </div>
+            </div>
+
+            <!-- 네비게이션 탭 -->
+            <nav class="nav-tabs">
+                <button class="tab-btn active" data-tab="fingering">운지법</button>
+                <button class="tab-btn" data-tab="beginner">초급</button>
+                <button class="tab-btn" data-tab="intermediate">중급</button>
+                <button class="tab-btn" data-tab="advanced">고급</button>
+                <button class="tab-btn" data-tab="practice">연습실</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="main-content">
+        <div class="container">
+
+            <!-- 운지법 섹션 -->
+            <section id="fingering" class="tab-content active">
+                <div class="section-header">
+                    <h2>🎼 12홀 오카리나 운지법</h2>
+                    <p>각 음표를 클릭하면 소리를 들을 수 있습니다</p>
+                </div>
+
+                <!-- 오카리나 다이어그램 -->
+                <div class="ocarina-diagram">
+                    <div class="ocarina-body">
+                        <div class="hole-pattern">
+                            <!-- 윗줄 구멍들 -->
+                            <div class="hole-row top-holes">
+                                <div class="hole" data-hole="1"></div>
+                                <div class="hole" data-hole="2"></div>
+                                <div class="hole" data-hole="3"></div>
+                                <div class="hole" data-hole="4"></div>
+                            </div>
+                            <!-- 아랫줄 구멍들 -->
+                            <div class="hole-row bottom-holes">
+                                <div class="hole thumb-hole" data-hole="thumb1"></div>
+                                <div class="hole" data-hole="5"></div>
+                                <div class="hole" data-hole="6"></div>
+                                <div class="hole" data-hole="7"></div>
+                                <div class="hole" data-hole="8"></div>
+                                <div class="hole thumb-hole" data-hole="thumb2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 음계 선택 -->
+                <div class="scale-selector">
+                    <h3>🎹 음계 선택</h3>
+                    <div class="notes-grid">
+                        <button class="note-btn" data-note="C4" data-freq="261.63">도 (C)</button>
+                        <button class="note-btn" data-note="D4" data-freq="293.66">레 (D)</button>
+                        <button class="note-btn" data-note="E4" data-freq="329.63">미 (E)</button>
+                        <button class="note-btn" data-note="F4" data-freq="349.23">파 (F)</button>
+                        <button class="note-btn" data-note="G4" data-freq="392.00">솔 (G)</button>
+                        <button class="note-btn" data-note="A4" data-freq="440.00">라 (A)</button>
+                        <button class="note-btn" data-note="B4" data-freq="493.88">시 (B)</button>
+                        <button class="note-btn" data-note="C5" data-freq="523.25">높은 도 (C)</button>
+                    </div>
+                </div>
+
+                <!-- 운지법 설명 -->
+                <div class="fingering-info">
+                    <div class="info-card">
+                        <h4>🫁 호흡법</h4>
+                        <p>배로 숨을 쉬고, 일정한 압력으로 불어주세요. 너무 세게 불지 마세요.</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>👄 입술 모양</h4>
+                        <p>입술을 가볍게 오므리고, 마우스피스를 완전히 입에 넣지 말고 살짝 물어주세요.</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>🤏 손가락 자세</h4>
+                        <p>손가락 끝으로 구멍을 완전히 막거나 열어주세요. 반만 막으면 음이 불안정해집니다.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 초급 과정 섹션 -->
+            <section id="beginner" class="tab-content">
+                <div class="section-header">
+                    <h2>🌱 초급 과정</h2>
+                    <p>기초부터 차근차근 배워보세요</p>
+                </div>
+
+                <div class="songs-grid">
+                    <div class="song-card" data-song="doremi">
+                        <div class="song-header">
+                            <h3>도레미송</h3>
+                            <div class="difficulty">⭐⭐☆☆☆</div>
+                        </div>
+                        <div class="song-info">
+                            <p>가장 기본적인 음계 연습곡입니다.</p>
+                            <div class="song-actions">
+                                <button class="btn-primary" onclick="showSheet('doremi')">악보 보기</button>
+                                <button class="btn-secondary" onclick="playDemo('doremi')">데모 듣기</button>
+                            </div>
+                        </div>
+                        <div class="progress-indicator">
+                            <span class="progress-text">진도: 0%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="song-card" data-song="butterfly">
+                        <div class="song-header">
+                            <h3>나비야</h3>
+                            <div class="difficulty">⭐⭐☆☆☆</div>
+                        </div>
+                        <div class="song-info">
+                            <p>아름다운 우리나라 동요입니다.</p>
+                            <div class="song-actions">
+                                <button class="btn-primary" onclick="showSheet('butterfly')">악보 보기</button>
+                                <button class="btn-secondary" onclick="playDemo('butterfly')">데모 듣기</button>
+                            </div>
+                        </div>
+                        <div class="progress-indicator">
+                            <span class="progress-text">진도: 0%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="song-card" data-song="schoolbell">
+                        <div class="song-header">
+                            <h3>학교종</h3>
+                            <div class="difficulty">⭐⭐☆☆☆</div>
+                        </div>
+                        <div class="song-info">
+                            <p>리듬감을 익히기 좋은 곡입니다.</p>
+                            <div class="song-actions">
+                                <button class="btn-primary" onclick="showSheet('schoolbell')">악보 보기</button>
+                                <button class="btn-secondary" onclick="playDemo('schoolbell')">데모 듣기</button>
+                            </div>
+                        </div>
+                        <div class="progress-indicator">
+                            <span class="progress-text">진도: 0%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="song-card" data-song="threebears">
+                        <div class="song-header">
+                            <h3>곰 세 마리</h3>
+                            <div class="difficulty">⭐⭐☆☆☆</div>
+                        </div>
+                        <div class="song-info">
+                            <p>재미있는 동요로 즐겁게 연습하세요.</p>
+                            <div class="song-actions">
+                                <button class="btn-primary" onclick="showSheet('threebears')">악보 보기</button>
+                                <button class="btn-secondary" onclick="playDemo('threebears')">데모 듣기</button>
+                            </div>
+                        </div>
+                        <div class="progress-indicator">
+                            <span class="progress-text">진도: 0%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="song-card" data-song="twinkle">
+                        <div class="song-header">
+                            <h3>작은 별</h3>
+                            <div class="difficulty">⭐⭐☆☆☆</div>
+                        </div>
+                        <div class="song-info">
+                            <p>세계적으로 사랑받는 동요입니다.</p>
+                            <div class="song-actions">
+                                <button class="btn-primary" onclick="showSheet('twinkle')">악보 보기</button>
+                                <button class="btn-secondary" onclick="playDemo('twinkle')">데모 듣기</button>
+                            </div>
+                        </div>
+                        <div class="progress-indicator">
+                            <span class="progress-text">진도: 0%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 중급 과정 섹션 -->
+            <section id="intermediate" class="tab-content">
+                <div class="section-header">
+                    <h2>🌿 중급 과정</h2>
+                    <p>한 단계 발전된 곡들을 연주해보세요</p>
+                </div>
+
+                <div class="songs-grid">
+                    <div class="song-card" data-song="edelweiss">
+                        <div class="song-header">
+                            <h3>에델바이스</h3>
+                            <div class="difficulty">⭐⭐⭐☆☆</div>
+                        </div>
+                        <div class="song-info">
+                            <p>사운드 오브 뮤직의 아름다운 곡입니다.</p>
+                            <div class="song-actions">
+                                <button class="btn-primary" onclick="showSheet('edelweiss')">악보 보기</button>
+                                <button class="btn-secondary" onclick="playDemo('edelweiss')">데모 듣기</button>
+                            </div>
+                        </div>
+                        <div class="progress-indicator">
+                            <span class="progress-text">진도: 0%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="song-card" data-song="arirang">
+                        <div class="song-header">
+                            <h3>아리랑</h3>
+                            <div class="difficulty">⭐⭐⭐☆☆</div>
+                        </div>
+                        <div class="song-info">
+                            <p>우리나라의 대표적인 민요입니다.</p>
+                            <div class="song-actions">
+                                <button class="btn-primary" onclick="showSheet('arirang')">악보 보기</button>
+                                <button class="btn-secondary" onclick="playDemo('arirang')">데모 듣기</button>
+                            </div>
+                        </div>
+                        <div class="progress-indicator">
+                            <span class="progress-text">진도: 0%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="song-card" data-song="canon">
+                        <div class="song-header">
+                            <h3>캐논 변주곡</h3>
+                            <div class="difficulty">⭐⭐⭐⭐☆</div>
+                        </div>
+                        <div class="song-info">
+                            <p>파헬벨의 캐논을 오카리나용으로 편곡했습니다.</p>
+                            <div class="song-actions">
+                                <button class="btn-primary" onclick="showSheet('canon')">악보 보기</button>
+                                <button class="btn-secondary" onclick="playDemo('canon')">데모 듣기</button>
+                            </div>
+                        </div>
+                        <div class="progress-indicator">
+                            <span class="progress-text">진도: 0%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="song-card" data-song="laputa">
+                        <div class="song-header">
+                            <h3>천공의 성 라퓨타</h3>
+                            <div class="difficulty">⭐⭐⭐⭐☆</div>
+                        </div>
+                        <div class="song-info">
+                            <p>지브리 애니메이션의 감동적인 OST입니다.</p>
+                            <div class="song-actions">
+                                <button class="btn-primary" onclick="showSheet('laputa')">악보 보기</button>
+                                <button class="btn-secondary" onclick="playDemo('laputa')">데모 듣기</button>
+                            </div>
+                        </div>
+                        <div class="progress-indicator">
+                            <span class="progress-text">진도: 0%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="song-card" data-song="moonriver">
+                        <div class="song-header">
+                            <h3>Moon River</h3>
+                            <div class="difficulty">⭐⭐⭐☆☆</div>
+                        </div>
+                        <div class="song-info">
+                            <p>재즈 스탠더드의 명곡입니다.</p>
+                            <div class="song-actions">
+                                <button class="btn-primary" onclick="showSheet('moonriver')">악보 보기</button>
+                                <button class="btn-secondary" onclick="playDemo('moonriver')">데모 듣기</button>
+                            </div>
+                        </div>
+                        <div class="progress-indicator">
+                            <span class="progress-text">진도: 0%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 고급 과정 섹션 -->
+            <section id="advanced" class="tab-content">
+                <div class="section-header">
+                    <h2>🌳 고급 과정</h2>
+                    <p>도전적인 고급 곡들로 실력을 완성하세요</p>
+                </div>
+
+                <div class="songs-grid">
+                    <div class="song-card" data-song="vivaldi">
+                        <div class="song-header">
+                            <h3>비발디 사계 - 봄</h3>
+                            <div class="difficulty">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <div class="song-info">
+                            <p>바로크 시대의 걸작을 오카리나로 연주해보세요.</p>
+                            <div class="song-actions">
+                                <button class="btn-primary" onclick="showSheet('vivaldi')">악보 보기</button>
+                                <button class="btn-secondary" onclick="playDemo('vivaldi')">데모 듣기</button>
+                            </div>
+                        </div>
+                        <div class="progress-indicator">
+                            <span class="progress-text">진도: 0%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="song-card" data-song="zelda">
+                        <div class="song-header">
+                            <h3>젤다의 전설 메인 테마</h3>
+                            <div class="difficulty">⭐⭐⭐⭐☆</div>
+                        </div>
+                        <div class="song-info">
+                            <p>게임 음악의 명곡을 연주해보세요.</p>
+                            <div class="song-actions">
+                                <button class="btn-primary" onclick="showSheet('zelda')">악보 보기</button>
+                                <button class="btn-secondary" onclick="playDemo('zelda')">데모 듣기</button>
+                            </div>
+                        </div>
+                        <div class="progress-indicator">
+                            <span class="progress-text">진도: 0%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="song-card" data-song="pachelbel">
+                        <div class="song-header">
+                            <h3>파헬벨 캐논</h3>
+                            <div class="difficulty">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <div class="song-info">
+                            <p>클래식의 영원한 명곡입니다.</p>
+                            <div class="song-actions">
+                                <button class="btn-primary" onclick="showSheet('pachelbel')">악보 보기</button>
+                                <button class="btn-secondary" onclick="playDemo('pachelbel')">데모 듣기</button>
+                            </div>
+                        </div>
+                        <div class="progress-indicator">
+                            <span class="progress-text">진도: 0%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="song-card" data-song="howl">
+                        <div class="song-header">
+                            <h3>하울의 움직이는 성</h3>
+                            <div class="difficulty">⭐⭐⭐⭐☆</div>
+                        </div>
+                        <div class="song-info">
+                            <p>지브리의 또 다른 명곡입니다.</p>
+                            <div class="song-actions">
+                                <button class="btn-primary" onclick="showSheet('howl')">악보 보기</button>
+                                <button class="btn-secondary" onclick="playDemo('howl')">데모 듣기</button>
+                            </div>
+                        </div>
+                        <div class="progress-indicator">
+                            <span class="progress-text">진도: 0%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="song-card" data-song="bumblebee">
+                        <div class="song-header">
+                            <h3>Flight of the Bumblebee</h3>
+                            <div class="difficulty">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <div class="song-info">
+                            <p>최고 난이도의 도전적인 곡입니다.</p>
+                            <div class="song-actions">
+                                <button class="btn-primary" onclick="showSheet('bumblebee')">악보 보기</button>
+                                <button class="btn-secondary" onclick="playDemo('bumblebee')">데모 듣기</button>
+                            </div>
+                        </div>
+                        <div class="progress-indicator">
+                            <span class="progress-text">진도: 0%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 연습실 섹션 -->
+            <section id="practice" class="tab-content">
+                <div class="section-header">
+                    <h2>🎯 연습실</h2>
+                    <p>다양한 연습 도구로 실력을 향상시키세요</p>
+                </div>
+
+                <div class="practice-tools">
+                    <!-- 메트로놈 -->
+                    <div class="tool-card">
+                        <h3>🥁 메트로놈</h3>
+                        <div class="metronome-controls">
+                            <div class="bpm-display">
+                                <span id="bpmValue">120</span> BPM
+                            </div>
+                            <div class="bpm-slider">
+                                <input type="range" id="bpmSlider" min="60" max="200" value="120">
+                            </div>
+                            <div class="metronome-buttons">
+                                <button id="metronomeStart" class="btn-primary">시작</button>
+                                <button id="metronomeStop" class="btn-secondary">정지</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 음계 연습 -->
+                    <div class="tool-card">
+                        <h3>🎼 음계 연습</h3>
+                        <div class="scale-practice">
+                            <div class="scale-buttons">
+                                <button class="btn-primary" onclick="playScale('ascending')">상행 연주</button>
+                                <button class="btn-primary" onclick="playScale('descending')">하행 연주</button>
+                                <button class="btn-secondary" onclick="startScaleGame()">음계 게임</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 연습 게임 -->
+                    <div class="tool-card">
+                        <h3>🎮 연습 게임</h3>
+                        <div class="game-area" id="gameArea">
+                            <p>음표가 나타나면 해당하는 운지법으로 연주하세요!</p>
+                            <div class="game-controls">
+                                <button class="btn-primary" onclick="startGame()">게임 시작</button>
+                                <button class="btn-secondary" onclick="stopGame()">게임 종료</button>
+                            </div>
+                            <div class="score-display">
+                                <span>점수: <span id="gameScore">0</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 악보 모달 -->
+    <div id="sheetModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="sheetTitle">악보</h3>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="sheetContent">
+                    <!-- 악보 내용이 여기에 표시됩니다 -->
+                </div>
+                <div class="modal-tips">
+                    <h4>연습 팁:</h4>
+                    <div id="practiceTips"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 오카리나 마스터. 음악과 함께하는 즐거운 학습 여행 🎵</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript 파일들 -->
+    <script src="js/audio.js"></script>
+    <script src="js/fingering.js"></script>
+    <script src="js/songs.js"></script>
+    <script src="js/practice.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
